@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex flex-nowrap overflow-auto gap-3 px-2">
+                @if(sliderType === "CUISINE"){
+                    @for(type of cuisineTypes; track $index){
+                    <app-category-card cuisineType="{{type}}"></app-category-card>
+                    }
+                }
+                @if(sliderType === "DISH"){
+                    @for(type of dishTypes; track $index){
+                    <app-category-card cuisineType="{{type}}"></app-category-card>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

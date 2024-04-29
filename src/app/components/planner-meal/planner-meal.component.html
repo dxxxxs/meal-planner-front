@@ -1,0 +1,32 @@
+<div>
+    <h3 (click)="toggle()" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + mealName|removeWhitespaces"
+        aria-expanded="false" [attr.aria-controls]="'collapse' + mealName|removeWhitespaces">{{mealName}}
+        @if(toggled){
+        <i class="bi bi-caret-up"></i>
+        }@else {
+        <i class="bi bi-caret-down"></i>
+        }
+    </h3>
+    <div class="collapse collapse-vertical" id="collapse{{mealName|removeWhitespaces}}"
+        style="background-color: #21d19335">
+        <app-modal-busqueda mealName="{{mealName}}"></app-modal-busqueda>
+        <div class="d-flex flex-wrap overflow-auto gap-3 px-2">
+            @for(recipeData of data;track $index){
+            @for(recipe of recipeData.hits; track $index){
+
+            <app-recipecard name="{{recipe.recipe.label}}" caloriesString="{{recipe.recipe.calories}}"
+                img="{{recipe.recipe.image}}" [nutrients]="recipe.recipe.totalNutrients"
+                [dietLabels]="recipe.recipe.dietLabels"></app-recipecard>
+
+            }
+            }
+        </div>
+
+    </div>
+</div>
+<div class="d-flex justify-content-between" style="width: 100vw;">
+    <h4 class="flex-fill text-center">0 calories</h4>
+    <h4 class="flex-fill text-center">0 g carbs</h4>
+    <h4 class="flex-fill text-center">0 g protein</h4>
+    <h4 class="flex-fill text-center">0 g fat</h4>
+</div>

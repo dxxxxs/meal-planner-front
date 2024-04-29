@@ -1,0 +1,21 @@
+<h1>Meal Planner</h1>
+<h2>Descripcion</h2>
+<app-slider sliderType="CUISINE"></app-slider>
+<app-slider sliderType="DISH"></app-slider>
+
+<div class="container" style="display: flex; flex-wrap: wrap; justify-content: center;">
+
+    @for(recipeData of data;track $index){
+    @for(recipe of recipeData.hits; track $index){
+
+    <app-recipecard name="{{recipe.recipe.label}}" caloriesString="{{recipe.recipe.calories}}"
+        img="{{recipe.recipe.image}}" [nutrients]="recipe.recipe.totalNutrients"
+        [dietLabels]="recipe.recipe.dietLabels"></app-recipecard>
+
+    }
+    }
+
+
+</div>
+
+<button (click)="loadNextRandomRecipes()">Load more</button>

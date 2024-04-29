@@ -6,6 +6,16 @@ export interface RecipeAPIResponse {
     hits: Hit[]
 }
 
+export interface RecipeAPIRequest {
+    diet?: string[],
+    health?: string[],
+    cuisineType?: string[],
+    mealType?: string[],
+    dishType?: string[],
+    calories?: string,
+    field?: string[]
+}
+
 export interface Links {
     self: Self
     next: Next
