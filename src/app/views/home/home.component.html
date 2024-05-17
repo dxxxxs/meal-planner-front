@@ -1,21 +1,83 @@
-<h1>Meal Planner</h1>
-<h2>Descripcion</h2>
+<div class="test">
+    <h1>Meal Planner</h1>
+    <h2>Description</h2>
+</div>
 <app-slider sliderType="CUISINE"></app-slider>
-<app-slider sliderType="DISH"></app-slider>
+<!-- <app-slider sliderType="DISH"></app-slider> -->
 
 <div class="container" style="display: flex; flex-wrap: wrap; justify-content: center;">
-
     @for(recipeData of data;track $index){
     @for(recipe of recipeData.hits; track $index){
-
-    <app-recipecard name="{{recipe.recipe.label}}" caloriesString="{{recipe.recipe.calories}}"
-        img="{{recipe.recipe.image}}" [nutrients]="recipe.recipe.totalNutrients"
-        [dietLabels]="recipe.recipe.dietLabels"></app-recipecard>
-
+    <app-recipecard [data]="recipe" (showModalEmitter)="updateModalData($event)"></app-recipecard>
     }
     }
-
-
 </div>
 
-<button (click)="loadNextRandomRecipes()">Load more</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        @if(isSetModalData){
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{modalData.recipe.label}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{modalData.recipe.image}}">
+                
+                <!-- Cautions -->
+                <div>
+                    <h5>Cautions</h5>
+                    @for(i of modalData.recipe.cautions; track $index){
+                        {{i}}<br>
+                    }
+                </div>
+                <!-- Cuisine Type -->
+                <div>
+                    <h5>Cuisine Type</h5>
+                    @for(i of modalData.recipe.cuisineType; track $index){
+                        {{i}}<br>
+                    }
+                </div>
+                <!-- Ingredients -->
+                <div>
+                    <h5>Ingredients</h5>
+                    <ul>
+
+                        @for(i of modalData.recipe.ingredientLines; track $index){
+                            <li>{{i}}</li>
+                        }
+                    </ul>
+                </div>
+                <!-- Diet Labels -->
+                <div>
+                    <h5>Diet Labels</h5>
+                    @for(i of modalData.recipe.dietLabels; track $index){
+                        {{i}}<br>
+                    }
+                </div>
+                <!-- Health Labels -->
+                <div>
+                    <h5>Health Labels</h5>
+                    @for(i of modalData.recipe.healthLabels; track $index){
+                        {{i}}<br>
+                    }
+                </div>
+                <!-- Digest -->
+                <div>
+                    <h5>Digest</h5>
+                    @for(i of modalData.recipe.digest; track $index){
+                        {{i.label}}  {{i.total}}<br>
+                    }
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<!-- <button (click)="loadNextRandomRecipes()">Load more</button> -->

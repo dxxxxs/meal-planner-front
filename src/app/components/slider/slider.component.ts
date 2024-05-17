@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CategoryCardComponent } from '../category.card/category.card.component';
-import { CuisineType } from '../../_interfaces/cuisine-type';
+import { CuisineTypeNames } from '../../_interfaces/cuisine-type';
 import { DishType } from '../../_interfaces/dish-type';
 
 
@@ -16,7 +16,7 @@ export class SliderComponent {
 
   @Input() sliderType: string = "CUISINE"; //"DISH" or "CUISINE"
 
-  cuisineTypes: string[] = Object.keys(CuisineType);
+  cuisineTypes: string[] = Object.values(CuisineTypeNames);
   dishTypes: string[] = Object.keys(DishType);
 
 

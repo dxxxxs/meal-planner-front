@@ -1,4 +1,11 @@
 .recipe-card {
-    margin-right: 10px; /* Ajusta el valor según sea necesario */
-    margin-bottom: 10px; /* Ajusta el valor según sea necesario */
-  }
+  margin-right: 10px;
+  /* Ajusta el valor según sea necesario */
+  margin-bottom: 10px;
+  /* Ajusta el valor según sea necesario */
+  height: 700px;
+}
+
+.card-img-top:hover{
+  cursor: pointer;
+}

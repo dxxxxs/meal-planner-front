@@ -27,4 +27,12 @@ export class RecipeServiceService {
     return this.http.get<RecipeAPIResponse>(url);
   }
 
+  saveRecipe(recipeData: any): Observable<any> {
+    return this.http.post<any>(this.URL, recipeData);
+  }
+
+  likeRecipe(userId: string, recipeLabel: string, recipeData: any): Observable<any> {
+    const body = { userId, recipeLabel, recipeData };
+    return this.http.post<any>(this.URL, body);
+  }
 }

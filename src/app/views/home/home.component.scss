@@ -1,0 +1,24 @@
+.test {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    width: 100%;
+    background-image: url("../../../assets/img/pexels-ella-olsson-572949-1640773.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Fija el fondo para un efecto parallax */
+    
+}
+
+.test h1, .test h2{
+    margin:0;
+    color: rgb(255, 255, 255);
+    mix-blend-mode: difference;
+}
+
+.test h1{
+    font-size: 100px;
+}

@@ -8,29 +8,31 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="">Recetas</a>
+                    <a class="nav-link active" aria-current="page" routerLink="">Recipes</a>
                 </li>
+                @if(isLoggedIn){
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="planner">Planificador</a>
+                    <a class="nav-link" routerLink="planner">Planner</a>
                 </li>
+                }
 
             </ul>
 
-            
-            <button type="button" class="btn btn-light">Iniciar sesión</button>
-            <button type="button" class="btn btn-dark">Registrarse</button>
-            <!-- Dropdown button for user profile -->
+            @if(!isLoggedIn){
+            <button type="button" class="btn btn-light" routerLink="login">Sign in</button>
+            <button type="button" class="btn btn-dark" routerLink="register">Sign up</button>
+            }@else {
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    Perfil
+                    {{username}}
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><a class="dropdown-item" href="/profile" routerLink="profile">Profile</a></li>
+                    <li><button class="dropdown-item" (click)="logout()">Log out</button></li>
                 </ul>
             </div>
+            }
         </div>
     </div>
 </nav>

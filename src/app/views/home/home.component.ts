@@ -21,6 +21,7 @@ export class HomeComponent {
   constructor(private recipeService: RecipeServiceService) {
     recipeService.getRecipes().subscribe((res) => {
       this.data?.push(res);
+      console.log(this.data);
     });
   }
 
@@ -38,5 +39,13 @@ export class HomeComponent {
         this.data?.push(res);
       });
     }
+  }
+  isSetModalData:boolean = false;
+  modalData : any = "";
+
+  updateModalData(data:any){
+    this.isSetModalData = true;
+    this.modalData = data;
+    console.log(this.modalData);
   }
 }

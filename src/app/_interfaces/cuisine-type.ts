@@ -21,3 +21,27 @@ export enum CuisineType {
     SouthEastAsian = 'south east asian',
     World = 'world'
 }
+
+export enum CuisineTypeNames{
+    American = 'American',
+    Asian = 'Asian',
+    British = 'British',
+    Caribbean = 'Caribbean',
+    CentralEurope = 'Central Europe',
+    Chinese = 'Chinese',
+    EasternEurope = 'Eastern Europe',
+    French = 'French',
+    Greek = 'Greek',
+    Indian = 'Indian',
+    Italian = 'Italian',
+    Japanese = 'Japanese',
+    Korean = 'Korean',
+    Kosher = 'Kosher',
+    Mediterranean = 'Mediterranean',
+    Mexican = 'Mexican',
+    MiddleEastern = 'Middle Eastern',
+    Nordic = 'Nordic',
+    SouthAmerican = 'South American',
+    SouthEastAsian = 'South East Asian',
+    World = 'World'
+}

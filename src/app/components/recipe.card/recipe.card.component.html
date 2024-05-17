@@ -1,19 +1,30 @@
 <div class="card recipe-card" style="width: 18rem;">
-    <img src="{{img}}" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">{{name}}</h5>
-        <p class="card-text">{{math.round(calories)}} calories</p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{math.round(protein.quantity)}} g protein</li>
-        <li class="list-group-item">{{math.round(carbs.quantity)}} g carbs</li>
-        <li class="list-group-item">{{math.round(fat.quantity)}} g fat</li>
-    </ul>
-    <div class="card-body">
-        @for(label of dietLabels;track $index){
-        <a class="card-link">{{label}}</a>
+    <div class="card-inner">
 
-        }
 
+        <div class="card-front">
+            <img src="{{data.recipe.image}}" class="card-img-top" alt="..." data-bs-toggle="modal"
+                data-bs-target="#exampleModal" (click)="showModal()">
+            <div class="card-body">
+                <h5 class="card-title">{{data.recipe.label}}</h5>
+                <p class="card-text">{{math.round(data.recipe.calories)}} calories</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{math.round(data.recipe.totalNutrients.PROCNT.quantity)}} g
+                    {{data.recipe.totalNutrients.PROCNT.label}}</li>
+                <li class="list-group-item">{{math.round(data.recipe.totalNutrients.CHOCDF.quantity)}} g
+                    {{data.recipe.totalNutrients.CHOCDF.label}}</li>
+                <li class="list-group-item">{{math.round(data.recipe.totalNutrients.FAT.quantity)}} g
+                    {{data.recipe.totalNutrients.FAT.label}}</li>
+            </ul>
+            <div class="card-body">
+                @for(label of data.recipe.dietLabels;track $index){
+                <a class="card-link">{{label}}</a>
+                }
+            </div>
+            <div style="display: flex; justify-content: right;">
+                <button type="button" class="btn btn-danger" style="margin:16px"><i class="bi bi-heart"></i></button>
+            </div>
+        </div>
     </div>
 </div>
