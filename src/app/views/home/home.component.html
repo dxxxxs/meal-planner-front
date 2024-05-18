@@ -2,8 +2,10 @@
     <h1>Meal Planner</h1>
     <h2>Description</h2>
 </div>
-<app-slider sliderType="CUISINE"></app-slider>
-<!-- <app-slider sliderType="DISH"></app-slider> -->
+
+
+<app-slider (recipeByCuisineTypeEmitter)="updateCuisineTypeRecipes($event)"></app-slider>
+
 
 <div class="container" style="display: flex; flex-wrap: wrap; justify-content: center;">
     @for(recipeData of data;track $index){
@@ -12,6 +14,8 @@
     }
     }
 </div>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

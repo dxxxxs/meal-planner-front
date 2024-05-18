@@ -27,11 +27,11 @@ export class RecipeCardComponent {
 
   math = Math;
   @Input() data: any = "";
-  @Output() showModalEmitter = new EventEmitter<number>();
+  @Output() showModalEmitter = new EventEmitter<any>();
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   showModal() {

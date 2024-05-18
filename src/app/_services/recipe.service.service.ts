@@ -16,11 +16,11 @@ export class RecipeServiceService {
   getRecipes(): Observable<RecipeAPIResponse> {
     return this.http.get<RecipeAPIResponse>(this.URL);
   }
-  getRecipesByMealType(mealType: string): Observable<RecipeAPIResponse> {
+  getRecipesByCuisineType(cuisineType: string): Observable<RecipeAPIResponse> {
     let reqParams = new HttpParams();
-    reqParams = reqParams.set("mealType", mealType);
+    reqParams = reqParams.set("cuisineType", cuisineType);
 
-    return this.http.get<RecipeAPIResponse>(this.URL + '/by-meal-type', { params: reqParams });
+    return this.http.get<RecipeAPIResponse>(this.URL + '/bycuisinetype', { params: reqParams });
   }
 
   getNextRecipes(url: string): Observable<RecipeAPIResponse> {

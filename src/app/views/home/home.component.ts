@@ -33,6 +33,11 @@ export class HomeComponent {
     }
   }
 
+  updateCuisineTypeRecipes(data: RecipeAPIResponse[]) {
+    this.data = data;
+  }
+
+
   loadNextRandomRecipes() {
     if (this.data !== undefined) {
       this.recipeService.getRecipes().subscribe((res) => {
@@ -40,10 +45,10 @@ export class HomeComponent {
       });
     }
   }
-  isSetModalData:boolean = false;
-  modalData : any = "";
+  isSetModalData: boolean = false;
+  modalData: any = "";
 
-  updateModalData(data:any){
+  updateModalData(data: any) {
     this.isSetModalData = true;
     this.modalData = data;
     console.log(this.modalData);

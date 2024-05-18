@@ -28,11 +28,11 @@ export class PlannerMealComponent {
 
   constructor(private recipeService: RecipeServiceService) { }
 
-  ngOnInit() {
-    this.recipeService.getRecipesByMealType(this.mealName).subscribe((res) => {
-      this.data?.push(res);
-    });
-  }
+  // ngOnInit() {
+  //   this.recipeService.getRecipesByMealType(this.mealName).subscribe((res) => {
+  //     this.data?.push(res);
+  //   });
+  // }
 
   toggle() {
     this.toggled = !this.toggled;
