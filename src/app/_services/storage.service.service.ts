@@ -32,7 +32,6 @@ export class StorageServiceService {
     if (user) {
       return true;
     }
-
     return false;
   }
 }

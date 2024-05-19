@@ -62,7 +62,7 @@ export interface Recipe {
     instructions: string[]
     tags: string[]
     externalId: string
-    totalNutrients: Nutrient[]
+    totalNutrients: any
     totalDaily: TotalDaily
     digest: Digest[]
 }

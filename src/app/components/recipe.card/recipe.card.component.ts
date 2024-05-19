@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { Nutrient } from '../../_interfaces/recipe.interface';
+import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Hit, Nutrient, Recipe } from '../../_interfaces/recipe.interface';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ModalRecipeComponent } from '../modal-recipe/modal-recipe.component';
+import { StorageServiceService } from '../../_services/storage.service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipecard',
@@ -26,9 +28,11 @@ import { ModalRecipeComponent } from '../modal-recipe/modal-recipe.component';
 export class RecipeCardComponent {
 
   math = Math;
-  @Input() data: any = "";
+  @Input() data?: Hit;
   @Output() showModalEmitter = new EventEmitter<any>();
 
+
+  constructor(private storageService:StorageServiceService, private router: Router){}
 
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(this.data);
@@ -36,5 +40,24 @@ export class RecipeCardComponent {
 
   showModal() {
     this.showModalEmitter.emit(this.data);
+  }
+
+  @ViewChild('modalButton') modalButton!: ElementRef;
+
+  likeRecipe(){
+    if(this.storageService.isLoggedIn()){
+
+    }else{
+      this.modalButton.nativeElement.click();
+    }
+  }
+
+  sendToSignIn(){
+this.router.navigate(['/login']);
+}
+
+sendToSignUp(){
+    this.router.navigate(['/register']);
+
   }
 }

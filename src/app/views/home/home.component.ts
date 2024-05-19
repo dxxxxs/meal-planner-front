@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { RecipeCardComponent } from '../../components/recipe.card/recipe.card.component';
 import { SliderComponent } from '../../components/slider/slider.component';
-import { RecipeAPIResponse } from '../../_interfaces/recipe.interface';
+import { Hit, RecipeAPIResponse } from '../../_interfaces/recipe.interface';
 import { RecipeServiceService } from '../../_services/recipe.service.service';
+import { ModalRecipeComponent } from '../../components/modal-recipe/modal-recipe.component';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,7 @@ import { RecipeServiceService } from '../../_services/recipe.service.service';
   imports: [
     RecipeCardComponent,
     SliderComponent,
+    ModalRecipeComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -46,7 +48,7 @@ export class HomeComponent {
     }
   }
   isSetModalData: boolean = false;
-  modalData: any = "";
+  modalData?: Hit;
 
   updateModalData(data: any) {
     this.isSetModalData = true;

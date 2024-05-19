@@ -1,8 +1,8 @@
 <div class="card recipe-card" style="width: 18rem;">
     <div class="card-inner">
 
-
         <div class="card-front">
+            @if(data){
             <img src="{{data.recipe.image}}" class="card-img-top" alt="..." data-bs-toggle="modal"
                 data-bs-target="#exampleModal" (click)="showModal()">
             <div class="card-body">
@@ -23,7 +23,27 @@
                 }
             </div>
             <div style="display: flex; justify-content: right;">
-                <button type="button" class="btn btn-danger" style="margin:16px"><i class="bi bi-heart"></i></button>
+                <button type="button" class="btn btn-danger" style="margin:16px" (click)="likeRecipe()"><i class="bi bi-heart"></i></button>
+            </div>
+        }
+    </div>
+</div>
+</div>
+
+<!-- Botón del modal, con un identificador agregado -->
+<button #modalButton type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display: none;"></button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">You must log in to save a recipe</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" (click)="sendToSignIn()">Sign in</button>
+                <button type="button" class="btn btn-dark" (click)="sendToSignUp()">Sign up</button>
             </div>
         </div>
     </div>
