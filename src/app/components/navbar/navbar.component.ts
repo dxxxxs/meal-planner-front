@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { EventBusService } from '../../_shared/event-bus.service';
 import { AuthServiceService } from '../../_services/auth.service.service';
 import { StorageServiceService } from '../../_services/storage.service.service';
@@ -9,7 +9,8 @@ import { Subscription } from 'rxjs';
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
