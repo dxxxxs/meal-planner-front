@@ -1,5 +1,5 @@
 @if (currentUser) {
-<div class="container">
+<div class="container" style="margin-bottom:60%">
     <header class="jumbotron">
         <h3>
             <strong>{{ currentUser.username }}</strong> Profile
@@ -10,11 +10,13 @@
         {{ currentUser.email }}
     </p>
     <strong>Likes</strong>
-    <ul>
-        @for (like of currentUser.likes; track $index) {
-        <li>{{ like }}</li>
-        }
-    </ul>
+
+    @if(likes){
+    @for (like of likes; track $index) {
+    <app-recipecard [data]="like"></app-recipecard>
+    }
+    }
+
 </div>
 } @else {
 <p>Please login.</p>

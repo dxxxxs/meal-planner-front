@@ -10,7 +10,7 @@
 <div class="container" style="display: flex; flex-wrap: wrap; justify-content: center;">
     @for(recipeData of data;track $index){
     @for(recipe of recipeData.hits; track $index){
-    <app-recipecard [data]="recipe" (showModalEmitter)="updateModalData($event)"></app-recipecard>
+    <app-recipecard [data]="recipe.recipe" (showModalEmitter)="updateModalData($event)"></app-recipecard>
     }
     }
 </div>

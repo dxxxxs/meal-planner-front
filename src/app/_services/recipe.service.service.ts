@@ -1,7 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RecipeAPIResponse, RecipeAPIRequest } from '../_interfaces/recipe.interface';
+import { RecipeAPIResponse, RecipeAPIRequest, Recipe } from '../_interfaces/recipe.interface';
+import { StorageServiceService } from './storage.service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { RecipeAPIResponse, RecipeAPIRequest } from '../_interfaces/recipe.inter
 export class RecipeServiceService {
   URL: string = "http://localhost:8080/api/recipes";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageServiceService) { }
 
 
   getRecipes(): Observable<RecipeAPIResponse> {
@@ -31,8 +32,39 @@ export class RecipeServiceService {
     return this.http.post<any>(this.URL, recipeData);
   }
 
-  likeRecipe(userId: string, recipeLabel: string, recipeData: any): Observable<any> {
-    const body = { userId, recipeLabel, recipeData };
-    return this.http.post<any>(this.URL, body);
+
+  likeRecipe(recipeData: Recipe): Observable<any> {
+    const user = this.storageService.getUser();
+    const token = this.storageService.getToken();
+
+
+    if (!user || !token) {
+      throw new Error('User not authenticated');
+    }
+
+    const body = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      recipe: recipeData
+    };
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(this.URL + '/likeRecipe', body, { headers: headers });
   }
+
+  recipeInLikes(recipeLabel: string): Observable<any> {
+    const user = this.storageService.getUser();
+
+    let reqParams = new HttpParams();
+    reqParams = reqParams.set("recipeLabel", recipeLabel);
+    reqParams = reqParams.set("id", user.id);
+
+    return this.http.get(this.URL + '/recipeInLikes', { params: reqParams });
+  }
+
 }

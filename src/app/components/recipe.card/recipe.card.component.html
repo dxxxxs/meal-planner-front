@@ -3,27 +3,33 @@
 
         <div class="card-front">
             @if(data){
-            <img src="{{data.recipe.image}}" class="card-img-top" alt="..." data-bs-toggle="modal"
+            <img src="{{data.image}}" class="card-img-top" alt="..." data-bs-toggle="modal"
                 data-bs-target="#exampleModal" (click)="showModal()">
             <div class="card-body">
-                <h5 class="card-title">{{data.recipe.label}}</h5>
-                <p class="card-text">{{math.round(data.recipe.calories)}} calories</p>
+                <h5 class="card-title">{{data.label}}</h5>
+                <p class="card-text">{{math.round(data.calories)}} calories</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">{{math.round(data.recipe.totalNutrients.PROCNT.quantity)}} g
-                    {{data.recipe.totalNutrients.PROCNT.label}}</li>
-                <li class="list-group-item">{{math.round(data.recipe.totalNutrients.CHOCDF.quantity)}} g
-                    {{data.recipe.totalNutrients.CHOCDF.label}}</li>
-                <li class="list-group-item">{{math.round(data.recipe.totalNutrients.FAT.quantity)}} g
-                    {{data.recipe.totalNutrients.FAT.label}}</li>
+                <li class="list-group-item">{{math.round(data.totalNutrients.PROCNT.quantity)}} g
+                    {{data.totalNutrients.PROCNT.label}}</li>
+                <li class="list-group-item">{{math.round(data.totalNutrients.CHOCDF.quantity)}} g
+                    {{data.totalNutrients.CHOCDF.label}}</li>
+                <li class="list-group-item">{{math.round(data.totalNutrients.FAT.quantity)}} g
+                    {{data.totalNutrients.FAT.label}}</li>
             </ul>
             <div class="card-body">
-                @for(label of data.recipe.dietLabels;track $index){
+                @for(label of data.dietLabels;track $index){
                 <a class="card-link">{{label}}</a>
                 }
             </div>
             <div style="display: flex; justify-content: right;">
-                <button type="button" class="btn btn-danger" style="margin:16px" (click)="likeRecipe()"><i class="bi bi-heart"></i></button>
+                <button type="button" class="btn btn-danger" style="margin:16px" (click)="likeRecipe()">
+                    @if(isLiked){
+                        <i class="bi bi-heartbreak"></i>
+                    }@else {
+                        <i class="bi bi-heart"></i>
+                    }
+                </button>
             </div>
         }
     </div>

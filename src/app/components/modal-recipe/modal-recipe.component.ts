@@ -1,6 +1,6 @@
 import { DecimalPipe, TitleCasePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Digest, Hit } from '../../_interfaces/recipe.interface';
+import { Digest, Hit, Recipe } from '../../_interfaces/recipe.interface';
 
 @Component({
   selector: 'app-modal-recipe',
@@ -10,6 +10,6 @@ import { Digest, Hit } from '../../_interfaces/recipe.interface';
   styleUrl: './modal-recipe.component.scss'
 })
 export class ModalRecipeComponent {
-  @Input() recipeData?: Hit;
+  @Input() recipeData?: Recipe;
 
 }

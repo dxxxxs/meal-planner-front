@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RecipeCardComponent } from '../../components/recipe.card/recipe.card.component';
 import { SliderComponent } from '../../components/slider/slider.component';
-import { Hit, RecipeAPIResponse } from '../../_interfaces/recipe.interface';
+import { Hit, Recipe, RecipeAPIResponse } from '../../_interfaces/recipe.interface';
 import { RecipeServiceService } from '../../_services/recipe.service.service';
 import { ModalRecipeComponent } from '../../components/modal-recipe/modal-recipe.component';
 
@@ -48,11 +48,10 @@ export class HomeComponent {
     }
   }
   isSetModalData: boolean = false;
-  modalData?: Hit;
+  modalData?: Recipe;
 
   updateModalData(data: any) {
     this.isSetModalData = true;
     this.modalData = data;
-    console.log(this.modalData);
   }
 }

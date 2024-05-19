@@ -41,7 +41,8 @@ export class LoginComponent {
         this.authService.login(username, password).subscribe({
           next: data => {
             this.storageService.saveUser(data);
-
+            this.storageService.saveToken(data.token);
+            console.log(data);
             this.isLoginFailed = false;
             this.isLoggedIn = true;
             this.roles = this.storageService.getUser().roles;

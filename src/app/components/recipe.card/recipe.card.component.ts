@@ -4,6 +4,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { ModalRecipeComponent } from '../modal-recipe/modal-recipe.component';
 import { StorageServiceService } from '../../_services/storage.service.service';
 import { Router } from '@angular/router';
+import { RecipeServiceService } from '../../_services/recipe.service.service';
+import { AlertService } from '../../_services/alert.service';
 
 @Component({
   selector: 'app-recipecard',
@@ -28,14 +30,22 @@ import { Router } from '@angular/router';
 export class RecipeCardComponent {
 
   math = Math;
-  @Input() data?: Hit;
+  @Input() data?: Recipe;
   @Output() showModalEmitter = new EventEmitter<any>();
 
 
-  constructor(private storageService:StorageServiceService, private router: Router){}
+  constructor(private storageService: StorageServiceService, private router: Router, private recipeService: RecipeServiceService, private alertService: AlertService) { }
+
+
+  isLiked: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log(this.data);
+    if (changes['data'] && this.data) {
+      this.recipeService.recipeInLikes(this.data.label).subscribe((res) => { 
+        console.log(res);
+        this.isLiked = res.isLiked;
+      });
+    }
   }
 
   showModal() {
@@ -44,20 +54,31 @@ export class RecipeCardComponent {
 
   @ViewChild('modalButton') modalButton!: ElementRef;
 
-  likeRecipe(){
-    if(this.storageService.isLoggedIn()){
+  likeRecipeMessage: string = "";
 
-    }else{
+  likeRecipe() {
+    if (this.storageService.isLoggedIn() && this.data) {
+      this.recipeService.likeRecipe(this.data).subscribe(
+        (response: any) => {
+          this.alertService.showAlert(false, response.message);
+          this.isLiked = !this.isLiked;
+          console.log(response);
+        },
+        (error: any) => {
+          this.alertService.showAlert(true, error);
+          console.log(error);
+        }
+      )
+    } else {
       this.modalButton.nativeElement.click();
     }
   }
 
-  sendToSignIn(){
-this.router.navigate(['/login']);
-}
+  sendToSignIn() {
+    this.router.navigate(['/login']);
+  }
 
-sendToSignUp(){
+  sendToSignUp() {
     this.router.navigate(['/register']);
-
   }
 }

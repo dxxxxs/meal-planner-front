@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { StorageServiceService } from './storage.service.service';
+import { Recipe } from '../_interfaces/recipe.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +11,28 @@ import { Observable } from 'rxjs';
 
 
 export class UserServiceService {
-  
-  API_URL:string = 'http://localhost:8080/api/user/';
-  
-  constructor(private http: HttpClient) {}
 
-  getPublicContent(): Observable<any> {
-    return this.http.get(this.API_URL + 'all', { responseType: 'text' });
-  }
+  API_URL: string = 'http://localhost:8080/api/user/';
 
-  getUserBoard(): Observable<any> {
-    return this.http.get(this.API_URL + 'user', { responseType: 'text' });
-  }
-  
-  getModeratorBoard(): Observable<any> {
-    return this.http.get(this.API_URL + 'mod', { responseType: 'text' });
-  }
+  constructor(private http: HttpClient, private storageService: StorageServiceService) { }
 
-  getAdminBoard(): Observable<any> {
-    return this.http.get(this.API_URL + 'admin', { responseType: 'text' });
+  getUserLikes(): Observable<any> {
+    const user = this.storageService.getUser();
+    const token = this.storageService.getToken();
+
+    if (!user || !token) {
+      throw new Error('User not authenticated');
+    }
+
+    const reqParams = new HttpParams()
+      .set("id", user.id)
+      .set("username", user.username)
+      .set("email", user.email);
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get(this.API_URL + 'likes', { params: reqParams, headers: headers });
   }
 }
