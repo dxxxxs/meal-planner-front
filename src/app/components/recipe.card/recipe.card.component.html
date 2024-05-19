@@ -6,7 +6,7 @@
             <img src="{{data.image}}" class="card-img-top" alt="..." data-bs-toggle="modal"
                 data-bs-target="#exampleModal" (click)="showModal()">
             <div class="card-body">
-                <h5 class="card-title">{{data.label}}</h5>
+                <h5 class="card-title recipe-label">{{data.label}}</h5>
                 <p class="card-text">{{math.round(data.calories)}} calories</p>
             </div>
             <ul class="list-group list-group-flush">
@@ -17,13 +17,13 @@
                 <li class="list-group-item">{{math.round(data.totalNutrients.FAT.quantity)}} g
                     {{data.totalNutrients.FAT.label}}</li>
             </ul>
-            <div class="card-body">
+            <!-- <div class="card-body">
                 @for(label of data.dietLabels;track $index){
                 <a class="card-link">{{label}}</a>
                 }
-            </div>
+            </div> -->
             <div style="display: flex; justify-content: right;">
-                <button type="button" class="btn btn-danger" style="margin:16px" (click)="likeRecipe()">
+                <button type="button" class="btn btn-danger pulsate-fwd" style="margin:16px" (click)="likeRecipe()">
                     @if(isLiked){
                         <i class="bi bi-heartbreak"></i>
                     }@else {

@@ -3,9 +3,50 @@
   /* Ajusta el valor según sea necesario */
   margin-bottom: 10px;
   /* Ajusta el valor según sea necesario */
-  height: 700px;
+}
+.recipe-label {
+  max-height: 2.4em; /* ajusta este valor según sea necesario */
+  min-height: 2.4em; /* ajusta este valor según sea necesario */
+  overflow: hidden;
+  text-overflow: ellipsis; /* agrega puntos suspensivos si el texto se recorta */
+  white-space: nowrap; /* evita que el texto se desborde a una nueva línea */
+
 }
 
 .card-img-top:hover{
   cursor: pointer;
+}
+
+.pulsate-fwd:hover {
+	-webkit-animation: pulsate-fwd 0.5s ease-in-out both;
+	        animation: pulsate-fwd 0.5s ease-in-out both;
+}
+
+@-webkit-keyframes pulsate-fwd {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes pulsate-fwd {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }

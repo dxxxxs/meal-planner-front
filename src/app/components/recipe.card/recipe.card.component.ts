@@ -42,7 +42,6 @@ export class RecipeCardComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data'] && this.data) {
       this.recipeService.recipeInLikes(this.data.label).subscribe((res) => { 
-        console.log(res);
         this.isLiked = res.isLiked;
       });
     }
@@ -62,11 +61,9 @@ export class RecipeCardComponent {
         (response: any) => {
           this.alertService.showAlert(false, response.message);
           this.isLiked = !this.isLiked;
-          console.log(response);
         },
         (error: any) => {
           this.alertService.showAlert(true, error);
-          console.log(error);
         }
       )
     } else {
