@@ -4,13 +4,14 @@ import { StorageServiceService } from './storage.service.service';
 import { Observable } from 'rxjs';
 import { Recipe } from '../_interfaces/recipe.interface';
 import { Plan } from '../_interfaces/plan';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlannerServiceService {
 
-  URL: string = "http://localhost:8080/api/planner/";
+  URL: string = `${environment.API_BASE}/planner/`;
 
   constructor(private http: HttpClient, private storageService: StorageServiceService) { }
 

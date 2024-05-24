@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RecipeAPIResponse, RecipeAPIRequest, Recipe } from '../_interfaces/recipe.interface';
 import { StorageServiceService } from './storage.service.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RecipeServiceService {
-  URL: string = "http://localhost:8080/api/recipes";
+  URL: string = `${environment.API_BASE}/recipes`;
 
   constructor(private http: HttpClient, private storageService: StorageServiceService) { }
 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageServiceService } from './storage.service.service';
 import { Recipe } from '../_interfaces/recipe.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { Recipe } from '../_interfaces/recipe.interface';
 
 export class UserServiceService {
 
-  API_URL: string = 'http://localhost:8080/api/user/';
+  API_URL: string = `${environment.API_BASE}/user/`;
 
   constructor(private http: HttpClient, private storageService: StorageServiceService) { }
 
