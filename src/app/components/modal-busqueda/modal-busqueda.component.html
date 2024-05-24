@@ -1,40 +1,83 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary align-middle" data-bs-toggle="modal" attr.data-bs-target="#{{mealName}}Modal">
-Add recipe <i class="bi bi-plus-circle"></i>
+<button type="button" class="btn btn-success align-middle" data-bs-toggle="modal"
+    attr.data-bs-target="#{{isDinner||isLunch ? (isDinner?'dinner' : 'lunch') : mealType[0]}}Modal">
+    Add recipe <i class="bi bi-plus-circle"></i>
 </button>
 
 <!-- Modal -->
-<div class="modal modal-xl fade" id="{{mealName}}Modal" tabindex="-1" [attr.aria-labelledby]="mealName+ 'ModalLabel'"
+<div class="modal modal-xl fade"
+    [id]="isDinner||isLunch ? (isDinner? 'dinnerModal' : 'lunchModal') : mealType[0]+'Modal'" tabindex="-1"
+    [attr.aria-labelledby]="(isDinner||isLunch ? (isDinner?'dinnerModal' : 'lunchModal') : mealType[0])+ 'ModalLabel'"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="{{mealName}}ModalLabel">{{mealName}}</h5>
+                <h5 class="modal-title"
+                    [id]="(isDinner||isLunch ? (isDinner? 'dinnerModal' : 'lunchModal') : mealType[0])+'ModalLabel'">
+                    @if(isLunch || isDinner){
+                    @if(isLunch){
+                    Lunch
+                    }
+                    @if(isDinner){
+                    Dinner
+                    }
+                    }
+                    @else {
+                    @for(i of mealType; track $index){
+                    {{i | titlecase}}@if($index != mealType.length-1){ /}
+                    }
+                    }
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <!-- Buscador -->
-            <form>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                        aria-describedby="button-addon">
-                    <button class="btn btn-success" type="button" id="button-addon"><i
-                            class="bi bi-search"></i></button>
+                <!-- Likes -->
+                <p class="d-inline-flex gap-1">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                        attr.data-bs-target="#collapse{{isDinner||isLunch ? (isDinner? 'dinner' : 'lunch') : mealType[0]}}"
+                        aria-expanded="false"
+                        [attr.aria-controls]="'collapse' + (isDinner||isLunch ? (isDinner? 'dinner' : 'lunch') : mealType[0])">
+                        Likes
+                    </button>
+                </p>
+                <div class="collapse"
+                    [id]="'collapse'+(isDinner||isLunch ? (isDinner? 'dinner' : 'lunch') : mealType[0])">
+                    <div class="card card-body" style="margin:auto;">
+                        <div class="container" style="display: flex; flex-wrap: wrap; justify-content: start;">
+                            @if(likes){
+                            @for(like of likes;track $index){
+                            @for(i of mealType; track $index){
+                            @if(like.mealType.includes(i)){
+                            <app-recipecard [data]="like" (showModalEmitter)="updateModalData($event)"
+                                [isOnPlanner]="true" (addedToPlanner)="addToPlanner($event)"></app-recipecard>
+                            }
+                            }
+                            }
+                            }
+                        </div>
+                    </div>
                 </div>
-            </form>
-            <!-- Fin Buscador -->
-                <div class="d-flex flex-wrap justify-content-center align-items-center">
-                    <app-recipecard></app-recipecard>
-                    <app-recipecard></app-recipecard>
-                    <app-recipecard></app-recipecard>
-                    <app-recipecard></app-recipecard>
-                    <app-recipecard></app-recipecard>
-                    <app-recipecard></app-recipecard>
-                    <app-recipecard></app-recipecard>
-                    <app-recipecard></app-recipecard>
-                    <app-recipecard></app-recipecard>
-                </div>
+                <!-- Fin Likes -->
+                <!-- Buscador -->
+                <form>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                            aria-describedby="button-addon" [formControl]="query">
+                        <button class="btn btn-success" type="button" id="button-addon"><i class="bi bi-search"
+                                (click)="getRecipeByQuery()"></i></button>
+                    </div>
+                </form>
+                <!-- Fin Buscador -->
+                <div class="card card-body d-flex flex-wrap"
+                    style="margin:auto; flex-direction: row; justify-content: space-around ;">
+                    @for(recipeData of data;track $index){
+                    @for(recipe of recipeData.hits; track $index){
+                    <app-recipecard [data]="recipe.recipe" (showModalEmitter)="updateModalData($event)"
+                        [isOnPlanner]="true" (addedToPlanner)="addToPlanner($event)"></app-recipecard>
+                    }
 
+                    }
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

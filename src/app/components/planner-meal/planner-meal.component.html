@@ -1,18 +1,40 @@
 <div class="separador">
-
-    <div>
-        <h3 (click)="toggle()" aria-expanded="false">{{mealName}}
+    <div style=" display:  flex; flex-direction: row; justify-content: space-between;">
+        <h3 aria-expanded="false">
+            @if(isLunch || isDinner){
+            @if(isLunch){
+            Lunch
+            }
+            @if(isDinner){
+            Dinner
+            }
+            }
+            @else {
+            @for(i of mealType; track $index){
+            {{i | titlecase}}@if($index != mealType.length-1){ /}
+            }
+            }
         </h3>
+
+        <app-modal-busqueda [mealType]="mealType" [isDinner]="isDinner" [isLunch]="isLunch"
+            (addedToPlanner)="addToPlanner($event)" (showModalEmitter)="updateModalData($event)"></app-modal-busqueda>
+
     </div>
     <div class="d-flex justify-content-between">
-        <h4 class="flex-fill text-center">0 calories</h4>
-        <h4 class="flex-fill text-center">0 g carbs</h4>
-        <h4 class="flex-fill text-center">0 g protein</h4>
-        <h4 class="flex-fill text-center">0 g fat</h4>
+        <h4 class="flex-fill text-center">{{totalCalories | number:'1.0-0'}} calories</h4>
+        <h4 class="flex-fill text-center">{{totalCarbs | number:'1.0-0'}} g carbs</h4>
+        <h4 class="flex-fill text-center">{{totalProteins | number:'1.0-0'}} g protein</h4>
+        <h4 class="flex-fill text-center">{{totalFats | number:'1.0-0'}} g fat</h4>
     </div>
     <hr>
-    <div style="position: absolute; right: 32px;">
-        <app-modal-busqueda mealName="{{mealName}}"></app-modal-busqueda>
+    <div class="container d-flex flex-direction-row" style="overflow-x: auto;">
+        @if(data){
+        @for(planItem of data;track $index){
+        <app-recipecard idOnPlan="{{planItem._id}}" [data]="planItem.recipeData" [weight]="planItem.quantity"
+            (showModalEmitter)="updateModalData($event)" [isInPlanner]="true"
+            (removedFromPlanner)="removeFromPlanner($event)" (addedToPlanner)="addToPlanner($event)"></app-recipecard>
+        }
+        }
     </div>
-    <app-recipecard></app-recipecard>
+
 </div>

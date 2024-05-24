@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthServiceService } from '../../_services/auth.service.service';
 import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { StorageServiceService } from '../../_services/storage.service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +25,14 @@ export class RegisterComponent {
   errorMessage = '';
 
 
-  constructor(private authService: AuthServiceService) {
+ 
+
+  constructor(private authService: AuthServiceService, private storageService: StorageServiceService, private router: Router) { }
+
+  ngOnInit(): void {
+    if (this.storageService.isLoggedIn()) {
+      this.router.navigate(['']);
+    }
   }
 
   onSubmit() {
@@ -34,7 +43,6 @@ export class RegisterComponent {
       if (username && email && password) {
         this.authService.register(username, email, password).subscribe({
           next: data => {
-            console.log(data);
             this.isSuccessful = true;
             this.isSignUpFailed = false;
           },

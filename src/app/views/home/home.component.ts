@@ -23,7 +23,6 @@ export class HomeComponent {
   constructor(private recipeService: RecipeServiceService) {
     recipeService.getRecipes().subscribe((res) => {
       this.data?.push(res);
-      console.log(this.data);
     });
   }
 

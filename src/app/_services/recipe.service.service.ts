@@ -23,13 +23,50 @@ export class RecipeServiceService {
 
     return this.http.get<RecipeAPIResponse>(this.URL + '/bycuisinetype', { params: reqParams });
   }
+  getRecipesByMealType(mealtype: string[]): Observable<RecipeAPIResponse> {
+    let reqParams = new HttpParams();
+    mealtype.forEach(type => {
+      reqParams = reqParams.append("mealType", type);
+  });
+
+    return this.http.get<RecipeAPIResponse>(this.URL + '/bymealtype', { params: reqParams });
+  }
+  getRecipesByText(mealtype: string[],query:string): Observable<RecipeAPIResponse> {
+    let reqParams = new HttpParams();
+    reqParams = reqParams.set("q",query);
+    mealtype.forEach(type => {
+      reqParams = reqParams.append("mealType", type);
+  });
+
+    return this.http.get<RecipeAPIResponse>(this.URL + '/bytext', { params: reqParams });
+  }
 
   getNextRecipes(url: string): Observable<RecipeAPIResponse> {
     return this.http.get<RecipeAPIResponse>(url);
   }
 
   saveRecipe(recipeData: any): Observable<any> {
-    return this.http.post<any>(this.URL, recipeData);
+    const user = this.storageService.getUser();
+    const token = this.storageService.getToken();
+
+
+    if (!user || !token) {
+      throw new Error('User not authenticated');
+    }
+
+    const body = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      recipe: recipeData
+    };
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(this.URL + '/saveRecipe', body, { headers: headers });
   }
 
 
@@ -65,6 +102,14 @@ export class RecipeServiceService {
     reqParams = reqParams.set("id", user.id);
 
     return this.http.get(this.URL + '/recipeInLikes', { params: reqParams });
+  }
+
+  getRecipeById(recipeId:any):Observable<any>{
+
+    let reqParams = new HttpParams();
+    reqParams = reqParams.set("recipeId", recipeId);
+
+    return this.http.get<any>(this.URL + '/recipeById', {params:reqParams});
   }
 
 }

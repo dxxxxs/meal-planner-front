@@ -12,4 +12,7 @@ import { Digest, Hit, Recipe } from '../../_interfaces/recipe.interface';
 export class ModalRecipeComponent {
   @Input() recipeData?: Recipe;
 
+  calculate(totalWeight: any, nutrient: any) {
+    return (100 * nutrient) / totalWeight;
+  }
 }

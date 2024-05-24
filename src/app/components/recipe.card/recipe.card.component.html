@@ -7,40 +7,66 @@
                 data-bs-target="#exampleModal" (click)="showModal()">
             <div class="card-body">
                 <h5 class="card-title recipe-label">{{data.label}}</h5>
-                <p class="card-text">{{math.round(data.calories)}} calories</p>
+                @if(isInPlanner){
+                    <p class="card-text">{{calculateCalories(weight) | number: '1.0-0'}} calories</p>
+                }@else {
+                    
+                    <p class="card-text">{{calculateCalories(weight) | number: '1.0-0'}} calories (per {{weight}} grams)</p>
+                }
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">{{math.round(data.totalNutrients.PROCNT.quantity)}} g
+                <li class="list-group-item">{{calculateProteins(weight) | number: '1.0-0'}} g
                     {{data.totalNutrients.PROCNT.label}}</li>
-                <li class="list-group-item">{{math.round(data.totalNutrients.CHOCDF.quantity)}} g
+                <li class="list-group-item">{{calculateCarbs(weight) | number: '1.0-0'}} g
                     {{data.totalNutrients.CHOCDF.label}}</li>
-                <li class="list-group-item">{{math.round(data.totalNutrients.FAT.quantity)}} g
+                <li class="list-group-item">{{calculateFats(weight) | number: '1.0-0'}} g
                     {{data.totalNutrients.FAT.label}}</li>
             </ul>
-            <!-- <div class="card-body">
-                @for(label of data.dietLabels;track $index){
-                <a class="card-link">{{label}}</a>
-                }
-            </div> -->
+
+            @if(isInPlanner){
+            <div style="display: flex; justify-content: right; margin-right:16px">
+                <div class="input-group input-group-sm mb-3" style="width: 50%;">
+                    <input type="number" class="form-control" aria-label="Recipient's username"
+                        aria-describedby="basic-addon2" [value]="weight" min="0" step="10" [formControl]="query">
+                    <span class="input-group-text" id="basic-addon2">g</span>
+                    <button type="button" class="btn btn-outline-secondary" (click)="updateWeight()"><i class="bi bi-check2"></i></button>
+                </div>
+            </div>
+            }
             <div style="display: flex; justify-content: right;">
-                <button type="button" class="btn btn-danger pulsate-fwd" style="margin:16px" (click)="likeRecipe()">
+                <button type="button" class="btn btn-danger pulsate-fwd"
+                    style="margin-right:16px;margin-bottom:16px;margin-top:16px" (click)="likeRecipe()">
                     @if(isLiked){
-                        <i class="bi bi-heartbreak"></i>
+                    <i class="bi bi-heartbreak"></i>
                     }@else {
-                        <i class="bi bi-heart"></i>
+                    <i class="bi bi-heart"></i>
                     }
                 </button>
+                @if(isOnPlanner){
+                <button type="button" class="btn btn-primary pulsate-fwd"
+                    style="margin-right:16px;margin-bottom:16px;margin-top:16px" (click)="addToPlanner()">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+                }
+                @if(isInPlanner){
+                <button type="button" class="btn btn-warning pulsate-fwd"
+                    style="margin-right:16px;margin-bottom:16px;margin-top:16px" (click)="removeFromPlanner()">
+                    <i class="bi bi-dash-lg"></i>
+                </button>
+                }
             </div>
-        }
+            }
+        </div>
     </div>
-</div>
 </div>
 
 <!-- Botón del modal, con un identificador agregado -->
-<button #modalButton type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display: none;"></button>
+<button #modalButton type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+    style="display: none;"></button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -48,8 +74,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" (click)="sendToSignIn()">Sign in</button>
-                <button type="button" class="btn btn-dark" (click)="sendToSignUp()">Sign up</button>
+                <button type="button" class="btn btn-light" (click)="sendToSignIn()" data-bs-dismiss="modal">Sign in</button>
+                <button type="button" class="btn btn-dark" (click)="sendToSignUp()" data-bs-dismiss="modal">Sign up</button>
             </div>
         </div>
     </div>

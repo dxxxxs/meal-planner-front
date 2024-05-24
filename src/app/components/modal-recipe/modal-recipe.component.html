@@ -7,10 +7,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img src="{{recipeData.image}}" class="img-fluid shadow-sm rounded mx-auto d-block" alt="{{recipeData.label}}" width="85%">
+                <img src="{{recipeData.image}}" class="img-fluid shadow-sm rounded mx-auto d-block"
+                    alt="{{recipeData.label}}" width="85%">
                 <hr>
-                <!-- Ingredients -->
                 <div>
+                    @for(i of recipeData.cuisineType; track $index){
+                    <span class="badge shadow-sm rounded-pill text-bg-info">{{i | titlecase}} cuisine</span>
+                    }
+                    @for(i of recipeData.dietLabels; track $index){
+                    <span class="badge shadow-sm rounded-pill text-bg-info">{{i}}</span>
+                    }
+                    @for(i of recipeData.healthLabels; track $index){
+                    <span class="badge shadow-sm rounded-pill text-bg-success">{{i}}</span>
+                    }
+                    @for(i of recipeData.cautions; track $index){
+                    <span class="badge shadow-lg rounded-pill text-bg-danger">{{i}}</span>
+                    }
+                </div>
+                <!-- Ingredients -->
+                <div style="margin-top: 16px; margin-bottom: 16px;">
                     <h5>Ingredients</h5>
                     <ul>
 
@@ -19,37 +34,7 @@
                         }
                     </ul>
                 </div>
-                <!-- Cuisine Type -->
                 <div>
-                    <h5>Cuisine Type</h5>
-                    @for(i of recipeData.cuisineType; track $index){
-                    {{i | titlecase}}<br>
-                    }
-                </div>
-                <!-- Diet Labels -->
-                <div>
-                    <h5>Diet Labels</h5>
-                    @for(i of recipeData.dietLabels; track $index){
-                    <span class="badge shadow-sm rounded-pill text-bg-info">{{i}}</span>
-                    }
-                </div>
-                <!-- Health Labels -->
-                <div>
-                    <h5>Health Labels</h5>
-                    @for(i of recipeData.healthLabels; track $index){
-                    <span class="badge shadow-sm rounded-pill text-bg-success">{{i}}</span>
-                    }
-                </div>
-                <!-- Cautions -->
-                <div>
-                    <h5>Cautions</h5>
-                    @for(i of recipeData.cautions; track $index){
-                    <span class="badge shadow-lg rounded-pill text-bg-danger">{{i}}</span>
-                    }
-                </div>
-                <!-- Digest -->
-                <div>
-                    <h5>Digest</h5>
                     <table class="table table-secondary table-striped">
                         <thead>
                             <th>Nutrient</th>
@@ -60,7 +45,7 @@
                             @for(i of recipeData.digest; track $index){
                             <tr>
                                 <td>{{i.label}}</td>
-                                <td>{{i.total | number:'1.0-2'}}</td>
+                                <td>{{calculate(recipeData.totalWeight,i.total) | number:'1.0-2'}}</td>
                                 <td>{{i.unit}}</td>
                             </tr>
                             }

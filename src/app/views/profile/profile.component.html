@@ -5,16 +5,17 @@
             <strong>{{ currentUser.username }}'s</strong> likes
         </h3>
     </header>
-
+    <hr>
     <div class="container" style="display: flex; flex-wrap: wrap; justify-content: center;">
         @if(likes){
-        @for (like of likes; track $index) {
-        <app-recipecard [data]="like"></app-recipecard>
-        }
+            @for (like of likes; track $index) {
+                <app-recipecard [data]="like" (showModalEmitter)="updateModalData($event)"></app-recipecard>
+            }
         }
     </div>
-
 </div>
+
+<app-modal-recipe [recipeData]="modalData"></app-modal-recipe>
 } @else {
 <p>Please login.</p>
 }

@@ -6,11 +6,20 @@ import { StorageServiceService } from '../../_services/storage.service.service';
 import { Router } from '@angular/router';
 import { RecipeServiceService } from '../../_services/recipe.service.service';
 import { AlertService } from '../../_services/alert.service';
+import { CommonModule, DecimalPipe, TitleCasePipe } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Plan, PlanObject } from '../../_interfaces/plan';
 
 @Component({
   selector: 'app-recipecard',
   standalone: true,
-  imports: [ModalRecipeComponent],
+  imports: [
+    ModalRecipeComponent,
+    DecimalPipe,
+    TitleCasePipe,
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './recipe.card.component.html',
   styleUrl: './recipe.card.component.scss',
   animations: [
@@ -30,18 +39,38 @@ import { AlertService } from '../../_services/alert.service';
 export class RecipeCardComponent {
 
   math = Math;
-  @Input() data?: Recipe;
+
   @Output() showModalEmitter = new EventEmitter<any>();
+  @Output() addedToPlanner = new EventEmitter<any>();
+  @Output() removedFromPlanner = new EventEmitter<any>();
+
+  @Input() data?: Recipe;
+  @Input() isOnPlanner: boolean = false;
+  @Input() isInPlanner: boolean = false;
+  @Input() weight: number = 100;
+  @Input() idOnPlan: string = "";
 
 
-  constructor(private storageService: StorageServiceService, private router: Router, private recipeService: RecipeServiceService, private alertService: AlertService) { }
+  query = new FormControl();
 
+  constructor(private storageService: StorageServiceService, private router: Router, private recipeService: RecipeServiceService, private alertService: AlertService) {
 
+  }
+
+  ngOnInit() {
+    this.query.setValue(this.weight);
+    this.query.valueChanges.subscribe(value => {
+      if (value < 0) {
+        this.query.setValue(0);
+      }
+      this.weight = this.query.value;
+    });
+  }
   isLiked: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] && this.data) {
-      this.recipeService.recipeInLikes(this.data.label).subscribe((res) => { 
+    if (this.storageService.isLoggedIn() && changes['data'] && this.data) {
+      this.recipeService.recipeInLikes(this.data.label).subscribe((res) => {
         this.isLiked = res.isLiked;
       });
     }
@@ -77,5 +106,57 @@ export class RecipeCardComponent {
 
   sendToSignUp() {
     this.router.navigate(['/register']);
+  }
+
+
+  calculateCalories(weight: number): number {
+    let calories = 0;
+    if (this.data) {
+      calories = (this.data.calories * weight) / this.data.totalWeight;
+    }
+    return calories;
+  }
+  calculateCarbs(weight: number): number {
+    let carbs = 0;
+    if (this.data) {
+      carbs = (this.data.totalNutrients.CHOCDF.quantity * weight) / this.data.totalWeight;
+    }
+    return carbs;
+  }
+  calculateProteins(weight: number): number {
+    let proteins = 0;
+    if (this.data) {
+      proteins = (this.data.totalNutrients.PROCNT.quantity * weight) / this.data.totalWeight;
+    }
+    return proteins;
+  }
+  calculateFats(weight: number): number {
+    let fats = 0;
+    if (this.data) {
+      fats = (this.data.totalNutrients.FAT.quantity * weight) / this.data.totalWeight;
+    }
+    return fats;
+  }
+
+
+  removeFromPlanner() {
+    this.recipeService.saveRecipe(this.data).subscribe((res => {
+      this.removedFromPlanner.emit(res._id);
+    }))
+  }
+
+  addToPlanner() {
+    this.recipeService.saveRecipe(this.data).subscribe((res => {
+      let obj: PlanObject = {
+        recipe: res._id,
+        quantity: this.weight
+      }
+      this.addedToPlanner.emit(obj);
+    }))
+  }
+
+
+  updateWeight() {
+    this.addToPlanner();
   }
 }

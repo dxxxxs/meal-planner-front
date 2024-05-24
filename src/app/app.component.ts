@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -18,5 +18,18 @@ import { FooterComponent } from './components/footer/footer.component';
 })
 export class AppComponent {
   title: string = "tfg-front";
+  showFooter: boolean = true;
 
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.checkRoute();
+      }
+    });
+  }
+
+  checkRoute() {
+    const currentRoute = this.router.url;
+    this.showFooter = !(currentRoute.includes('login') || currentRoute.includes('register'));
+  }
 }

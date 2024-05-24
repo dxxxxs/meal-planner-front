@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthServiceService } from '../../_services/auth.service.service';
 import { StorageServiceService } from '../../_services/storage.service.service';
 
@@ -23,12 +23,13 @@ export class LoginComponent {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private authService: AuthServiceService, private storageService: StorageServiceService) { }
+  constructor(private authService: AuthServiceService, private storageService: StorageServiceService, private router: Router) { }
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       this.roles = this.storageService.getUser().roles;
+      this.router.navigate(['']);
     }
   }
 
@@ -42,7 +43,6 @@ export class LoginComponent {
           next: data => {
             this.storageService.saveUser(data);
             this.storageService.saveToken(data.token);
-            console.log(data);
             this.isLoginFailed = false;
             this.isLoggedIn = true;
             this.roles = this.storageService.getUser().roles;
