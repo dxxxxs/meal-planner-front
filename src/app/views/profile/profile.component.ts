@@ -23,7 +23,7 @@ export class ProfileComponent {
 
   ngOnInit(): void {
     if (!this.storageService.isLoggedIn()) {
-      this.router.navigate(['']);
+      window.location.assign('/');
     }
     this.currentUser = this.storageService.getUser();
     this.userService.getUserLikes().subscribe((res) => {
