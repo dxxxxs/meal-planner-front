@@ -12,15 +12,15 @@
                 </li>
                 @if(isLoggedIn){
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="planner" routerLinkActive="active">Planner</a>
+                    <a class="nav-link" routerLink="planner" href="/planner" routerLinkActive="active">Planner</a>
                 </li>
                 }
 
             </ul>
 
             @if(!isLoggedIn){
-            <button type="button" class="btn btn-light" routerLink="login">Sign in</button>
-            <button type="button" class="btn btn-dark" routerLink="register">Sign up</button>
+            <a type="button" class="btn btn-light" href="/login" routerLink="login">Sign in</a>
+            <a type="button" class="btn btn-dark" href="/register" routerLink="register">Sign up</a>
             }@else {
                 <div class="dropdown dropstart d-none d-lg-block">
                     <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -35,7 +35,7 @@
                 
                 <ul class="d-lg-none navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="profile" routerLinkActive="active">Likes <i class="bi bi-heart"></i></a>
+                        <a class="nav-link" routerLink="profile" href="/profile" routerLinkActive="active">Likes <i class="bi bi-heart"></i></a>
                     </li>
                     <li class="nav-item" style="margin-top:16px;">
                         <button type="button" class="btn btn-dark" (click)="logout()">Log out <i class="bi bi-box-arrow-right"></i></button>
