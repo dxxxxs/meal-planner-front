@@ -21,15 +21,14 @@ export class LoginComponent {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  roles: string[] = [];
+
 
   constructor(private authService: AuthServiceService, private storageService: StorageServiceService, private router: Router) { }
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
-      this.router.navigate(['']);
+      // this.router.navigate(['']);
     }
   }
 
@@ -45,7 +44,6 @@ export class LoginComponent {
             this.storageService.saveToken(data.token);
             this.isLoginFailed = false;
             this.isLoggedIn = true;
-            this.roles = this.storageService.getUser().roles;
             this.reloadPage();
           },
           error: err => {

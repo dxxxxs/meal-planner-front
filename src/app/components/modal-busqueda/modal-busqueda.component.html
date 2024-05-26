@@ -33,11 +33,11 @@
             <div class="modal-body">
                 <!-- Likes -->
                 <p class="d-inline-flex gap-1">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    <button class="btn btn-danger" type="button" data-bs-toggle="collapse"
                         attr.data-bs-target="#collapse{{isDinner||isLunch ? (isDinner? 'dinner' : 'lunch') : mealType[0]}}"
                         aria-expanded="false"
                         [attr.aria-controls]="'collapse' + (isDinner||isLunch ? (isDinner? 'dinner' : 'lunch') : mealType[0])">
-                        Likes
+                        Likes <i class="bi bi-heart"></i>
                     </button>
                 </p>
                 <div class="collapse"
