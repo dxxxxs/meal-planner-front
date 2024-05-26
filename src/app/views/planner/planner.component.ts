@@ -44,7 +44,7 @@ export class PlannerComponent {
 
   constructor(private storageService: StorageServiceService, private plannerService: PlannerServiceService,  private router: Router) {
     if (!this.storageService.isLoggedIn()) {
-      this.router.navigate(['']);
+      window.location.assign('/');
     }
     this.getPlan(new Date());
   }
@@ -52,7 +52,7 @@ export class PlannerComponent {
   ngOnInit(): void {
     console.log("e");
     if (!this.storageService.isLoggedIn()) {
-      this.router.navigate(['']);
+      window.location.assign('/');
     }
   }
 
