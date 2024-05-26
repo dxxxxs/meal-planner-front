@@ -56,6 +56,6 @@ export class LoginComponent {
   }
 
   reloadPage(): void {
-    window.location.reload();
+    window.location.assign('/');
   }
 }

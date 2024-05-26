@@ -31,7 +31,7 @@ export class RegisterComponent {
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
-      this.router.navigate(['..']);
+      window.location.assign('/');
     }
   }
 
